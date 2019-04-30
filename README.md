@@ -1,7 +1,7 @@
 # EventsBuddy
 A Flask based application to assist event organisers in gathering feedback during event sessions.
 
-### By Esther Muigai, Adrian Maina, Gabriel Oduori and Harry Thuku
+##### By Esther Muigai, Adrian Maina, Gabriel Oduori and Harry Thuku
 
 ## Setup/Installation Requirements
 
