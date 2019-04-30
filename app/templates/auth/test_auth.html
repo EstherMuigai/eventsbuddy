@@ -1,3 +1,6 @@
+{% extends 'base.html'%}
 {% block content %}
 <p>Hello Auth!</p>
+<a href="{{url_for('admin.test_admin')}}">Admin path</a>
+<a href="{{url_for('user.test_user')}}">User path</a>
 {% endblock%}

@@ -2,23 +2,24 @@ import os
 
 class Config:
     SECRET_KEY = os.environ.get('SECRET_KEY')
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
 
-class DevConfig(Config):
+##class DevConfig(Config):
     ##INSTRUCTION: Set up for your machine
-    SQLALCHEMY_DATABASE_URI='postgresql+psycopg2://esthermuingai:honeybee@localhost/eventsbuddy'
+    ##SQLALCHEMY_DATABASE_URI='postgresql+psycopg2://U_NAME:PASSWORD@localhost/DB_NAME'
     DEBUG = True
 
-class TestConfig(Config):
+## TestConfig(Config):
     ##INSTRUCTION: Set up for your machine
-    SQLALCHEMY_DATABASE_URI ='postgresql+psycopg2://esthermuingai:honeybee@localhost/eventsbuddy_test'
+    ##INSTRUCTION: Set up for your machine
+    ##SQLALCHEMY_DATABASE_URI='postgresql+psycopg2://U_NAME:PASSWORD@localhost/TEST_DB_NAME
 
 class ProdConfig(Config):
-    SQLALCHEMY_DATABASE_URI=os.environ.get("DATABASE_URL")
     pass
 
 
 config_options = {
-'development':DevConfig,
+##'development':DevConfig,
 'production':ProdConfig,
-'test':TestConfig
+##'test':TestConfig
 }
