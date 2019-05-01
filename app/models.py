@@ -9,7 +9,7 @@ from flask_login import UserMixin
 
 class Admin(UserMixin,db.Model):
     '''
-    class for users
+    class for admins
     '''
     __tablename__='admins'
     id = db.Column(db.Integer,primary_key=True)
@@ -35,7 +35,11 @@ class Admin(UserMixin,db.Model):
         
     def __repr__(self):
         return f"Admin {self.first_name}"
+    
 
+    def save_admin(self):
+        db.session.add(self)
+        db.session.commit()
 
 
 class Event(db.Model):
@@ -52,7 +56,7 @@ class Event(db.Model):
     event_date = db.Column(db.DateTime, index=True, nullable = False)
 
     # Relationship with the question table 
-    question = db.relationship('Question',backref = 'events', nullable = False)
+    question = db.relationship('Question',backref = 'events', lazy = "dynamic")
     
     def __init__(self,timestamp, title, body, event_date,user_id):
         self.title = title
@@ -66,7 +70,10 @@ class Event(db.Model):
         
     def __repr__(self):
         return f"EVENT ID:{self.id} -- Date: {self.timestamp}"    
-
+    
+    def save_event(self):
+        db.session.add(self)
+        db.session.commit()
 
 class Question(db.Model):
     __tablename__ = "questions"
@@ -88,6 +95,11 @@ class Question(db.Model):
     
     def __repr__(self):
         return f"Question:{self.body} -- Event: {self.event_id}"    
+
+    def save_question(self):
+        db.session.add(self)
+        db.session.commit()
+
 
 class Response(db.Model):
     __tablename__ = "responses"
@@ -112,6 +124,9 @@ class Response(db.Model):
     def __repr__(self):
         return f"Question :{self.question} -- Response: {self.body}"    
 
+    def save_response(self):
+        db.session.add(self)
+        db.session.commit()
 
 class User(db.Model):
     __tablename__ = "users"
@@ -132,3 +147,8 @@ class User(db.Model):
         
     def __repr__(self):
         return f"USER ID:{self.device_id}----Respons ID:{self.question_id}"    
+
+
+    def save_user(self):
+        db.session.add(self)
+        db.session.commit()
