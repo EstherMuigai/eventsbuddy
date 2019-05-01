@@ -6,7 +6,7 @@ class Config:
 
 ##class DevConfig(Config):
     ##INSTRUCTION: Set up for your machine
-    ##SQLALCHEMY_DATABASE_URI='postgresql+psycopg2://U_NAME:PASSWORD@localhost/DB_NAME'
+    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://postgres:postgres@localhost/eventsbuddy'
     DEBUG = True
 
 ## TestConfig(Config):
@@ -19,7 +19,7 @@ class ProdConfig(Config):
 
 
 config_options = {
-##'development':DevConfig,
+'development':DevConfig,
 'production':ProdConfig,
 ##'test':TestConfig
 }
