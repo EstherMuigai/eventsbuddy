@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<a href="{{url_for('auth.logout')}}">Logout path</a>
+<a href="{{url_for('admin.create_event')}}">Create event path</a>
+<a href="{{url_for('admin.event_page')}}">Event page path</a>
+{% endblock %}
