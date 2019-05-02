@@ -1,0 +1,37 @@
+{% extends 'base.html'%}
+{% import 'bootstrap/wtf.html' as wtf %}
+{% block content %}
+<link href="https://fonts.googleapis.com/css?family=Black+And+White+Picture|Gugi" rel="stylesheet">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
+<div class="wrapper-view">
+    <div class="container-fluid" style="font-family: 'Gugi', cursive; text-align: center;">
+        <div class="row" style="background-color: #07a2c1;color: white;padding:2%;">
+            <div class="col-md-5">
+                <i class="fas fa-comments" style="color:white;font-size:30px;"></i>
+            </div>
+            <div class="col-md-3">
+                <h2 style="color:yellow;font-family: 'Black And White Picture', sans-serif;">[eventname]@</h2>
+                <h3>eventsbuddy</h3>
+            </div>
+            <div class="col-md-3">
+                <p>let's talk</p>
+            </div>
+        </div>
+        <div class="row" style="margin-top:20%;text-align: center; color:#07a2c1;">
+            <h3>Question goes here</h3>
+        </div>
+        <div class="row" style="margin-top:10%;text-align: center;">
+            <div class="col-md-2">
+            </div>
+            <div class="col-md-5">
+                {{wtf.quick_form(code)}}
+            </div>
+            <div class="col-md-2">
+            </div>
+        </div>
+        <div class="row" style="text-align: center;">
+
+        </div>
+    </div>
+</div>
+{% endblock%}

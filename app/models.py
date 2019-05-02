@@ -5,7 +5,7 @@ from . import login_manager
 from flask_login import UserMixin, LoginManager
 from datetime import datetime
 from flask_login import UserMixin
-from get_info import generate_events_id, get_device_id
+from .get_info import generate_events_id, get_device_id
 
 
 
