@@ -5,6 +5,8 @@ from . import login_manager
 from flask_login import UserMixin, LoginManager
 from datetime import datetime
 from flask_login import UserMixin
+from get_info import generate_events_id, get_device_id
+
 
 
 class Admin(UserMixin,db.Model):
@@ -54,6 +56,7 @@ class Event(db.Model):
     title = db.Column(db.String(120), nullable=False)
     body = db.Column(db.Text, nullable = False)
     event_date = db.Column(db.DateTime, index=True, nullable = False)
+    event_id = db.Column(db.String(8), nullable = False)
 
     # Relationship with the question table 
     question = db.relationship('Question',backref = 'events', lazy = "dynamic")
@@ -62,11 +65,11 @@ class Event(db.Model):
         self.title = title
         self.body = body
         self.event_date = event_date
-        self.event_id = event_id
+        self.event_id = generate_events_id()
         self.user_id = user_id
 
-    def generate_events_id():
-        pass
+
+
         
     def __repr__(self):
         return f"EVENT ID:{self.id} -- Date: {self.timestamp}"    
@@ -139,9 +142,12 @@ class User(db.Model):
     timestamp = db.Column(db.DateTime, index=True, nullable = False, default=datetime.utcnow)
     device_id = db.Column(db.Text, nullable = False)
 
+
+        
+
     def __init__(self,question_id, device_id,body, user_id):
         self.question_id = question_id
-        self.device_id - device_id
+        self.device_id  = get_device_id()
         self.user_id = user_id
 
         
