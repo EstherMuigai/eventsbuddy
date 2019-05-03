@@ -3,5 +3,5 @@ from wtforms.validators import Required
 from wtforms import SubmitField,StringField
 
 class EventCodeForm (FlaskForm):
-    code = StringField(validators = [Required()])
-    submit = SubmitField(validators = [Required()])
+    code = StringField( 'Enter Invitation Code.',validators = [Required()])
+    submit = SubmitField( 'Submit', validators = [Required()])
