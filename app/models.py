@@ -50,9 +50,10 @@ class Event(db.Model):
     Class for events
     '''
     # Relationship with the admin table
-    admin = db.relationship(Admin)
+    # admin = db.relationship(Admin)
+    admins = db.Column(db.Integer, db.ForeignKey('admins.id'))
     id = db.Column(db.Integer, primary_key = True)
-    timestamp = db.Column(db.DateTime, index=True, nullable = False, default=datetime.utcnow)
+    # timestamp = db.Column(db.DateTime, index=True, nullable = False, default=datetime.utcnow)
     title = db.Column(db.String(120), nullable=False)
     body = db.Column(db.Text, nullable = False)
     event_date = db.Column(db.DateTime, index=True, nullable = False)
@@ -61,12 +62,13 @@ class Event(db.Model):
     # Relationship with the question table 
     question = db.relationship('Question',backref = 'events', lazy = "dynamic")
     
-    def __init__(self,timestamp, title, body, event_date,user_id):
+    def __init__(self,admins, title, body, event_date, event_id=''):
+        self.admins = admins
         self.title = title
         self.body = body
         self.event_date = event_date
         self.event_id = generate_events_id()
-        self.user_id = user_id
+ 
 
 
 
@@ -84,17 +86,16 @@ class Question(db.Model):
     Class for Questions
     '''
     # Relationship with the events table
-    events = db.relationship(Event)
+    event = db.Column(db.Integer, db.ForeignKey('events.id'))
     id = db.Column(db.Integer, primary_key = True)
     body = db.Column(db.String(120), nullable=False)
     # This is auto-generated and links the event to future user sessions.
-    event_id = db.Column(db.String(8), nullable = False)
     # Relationship with the questions for the event
     responses = db.relationship('Answer', backref = 'questions', lazy = "dynamic")
     
-    def __init__(self,body, event_id):
+    def __init__(self,body, event):
         self.body =body
-        self.event_id = event_id
+        self.event_id = event
     
     def __repr__(self):
         return f"Question:{self.body} -- Event: {self.event_id}"    
@@ -110,22 +111,21 @@ class Response(db.Model):
     Class for Responses
     '''
     # Relationship with the questions table
-    questions = db.relationship(Question)
+    questions = db.Column(db.Integer, db.ForeignKey('questions.id'))
+    respondent = db.Column(db.Integer, db.ForeignKey('users.id'))
 
     id = db.Column(db.Integer, primary_key = True)
     timestamp = db.Column(db.DateTime, index=True, nullable = False, default=datetime.utcnow)
     body = db.Column(db.Text, nullable = False)
-    # Relationship with the questions for the event
-    users = db.relationship('User', backref = 'questions', lazy = "dynamic")
     
-    def __init__(self,question,timestamp,title, body, users):
-        self.question = question
+    def __init__(self,respondent,timestamp,questions, body):
+        self.questions = questions
+        self.respondent = respondent
         self.timestamp = timestamp
         self.body = body
-        self.users = users
    
     def __repr__(self):
-        return f"Question :{self.question} -- Response: {self.body}"    
+        return f"Question :{self.questions} -- Response: {self.body}"    
 
     def save_response(self):
         db.session.add(self)
@@ -137,18 +137,20 @@ class User(db.Model):
     Class for users
     '''
     # Relationship with the Responses table
-    responses = db.relationship(Response)
+    # responses = db.relationship(Response)
     id = db.Column(db.Integer, primary_key = True)
     timestamp = db.Column(db.DateTime, index=True, nullable = False, default=datetime.utcnow)
     device_id = db.Column(db.Text, nullable = False)
-
+    event_code = db.Column(db.Text, nullable = False)
+    responses = db.relationship('Response', backref = 'feedback', lazy = 'dynamic')
 
         
 
-    def __init__(self,question_id, device_id,body, user_id):
-        self.question_id = question_id
+    def __init__(self,device_id, event_code,timestamp):
         self.device_id  = get_device_id()
         self.user_id = user_id
+        self.event_code  = event_code
+        self.timestamp = timestamp
 
         
     def __repr__(self):
