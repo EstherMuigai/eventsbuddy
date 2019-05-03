@@ -1,19 +1,19 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
-from wtforms.validators import Required, Email, EqualTo
+from wtforms.validators import DataRequired, Email, EqualTo
 from wtforms import ValidationError
 from wtforms import StringField,PasswordField,BooleanField,SubmitField
 from ..models import User
 
 
 class RegistrationForm(FlaskForm):
-    
-    first_name = StringField('First Name:', validators = [Required())
-    first_name = StringField('First Name:', validators = [Required())
-    email = StringField('Your Email Address',validators=[Required(),Email()])
-    username = StringField('Enter your username',validators = [Required()])
-    password = PasswordField('Password',validators = [Required(), EqualTo('password_confirm',message = 'Passwords must match')])
-    password_confirm = PasswordField('Confirm Passwords',validators = [Required()])
+
+    first_name = StringField('First Name',validators = [DataRequired()])
+    last_name = StringField('Last Name',validators = [DataRequired()])
+    email = StringField('Your Email Address',validators=[DataRequired(),Email()])
+    username = StringField('Username',validators = [DataRequired()])
+    password = PasswordField('Password',validators = [DataRequired(), EqualTo('password_confirm',message = 'Passwords must match')])
+    password_confirm = PasswordField('Confirm Passwords',validators = [DataRequired()])
     submit = SubmitField('Register')
     
     
@@ -26,7 +26,7 @@ class RegistrationForm(FlaskForm):
             raise ValidationError('That username is taken')
       
 class LoginForm(FlaskForm):
-    email = StringField('Email',validators=[Required(),Email()])
-    password = PasswordField('Password',validators =[Required()])
+    email = StringField('Email', validators = [DataRequired(), Email()])
+    password = PasswordField('Password', validators=[DataRequired()])
     remember_me = BooleanField('Keep me logged in')
-    submit = SubmitField('Sign In')
+    submit = SubmitField('Log In')
