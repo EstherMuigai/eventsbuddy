@@ -2,6 +2,23 @@
 
 {% block content %}
 <a href="{{url_for('authenticate.logout')}}">Logout path</a>
-<a href="{{url_for('admin.create_event')}}">Create event path</a>
+
 <a href="{{url_for('admin.event_page')}}">Event page path</a>
+
+
+<a href="{{url_for('admin.create_event')}}">Create event path</a>
+
+{ % if admins_events % }
+
+    {% for event in admins_events %}
+
+        <h4>{{event.id}}</h4>
+        <p>{{event.body}}</p>
+        
+    {% endfor %}
+
+
+{% elif %}
+    <h1>ops.. theres no event by user {{administrator.username}} yet.</h1>
+{% endif %}
 {% endblock %}
