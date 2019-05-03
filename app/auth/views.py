@@ -18,12 +18,12 @@ def register():
         db.session.add(admin)
         db.session.commit()
         # Add email functionality in future may be?
-        return redirect(url_for('auth.login'))
+        return redirect(url_for('authenticate.login'))
         title = "New Account"
     return render_template('auth/register.html', form = form)
 
 
-@auth.route('/login',methods=['GET','POST'])    
+@auth.route('/admin/login',methods=['GET','POST'])    
 def login():
     login_form = LoginForm()
     if login_form.validate_on_submit():
@@ -40,5 +40,5 @@ def login():
 @login_required  
 def logout():
     logout_user()
-    #return render_template('admin/welcome.html')
-    return redirect(url_for())
+    return render_template('admin/welcome.html')
+    # return redirect(url_for())
