@@ -24,8 +24,11 @@ def dashboard(id):
     if CreateEvent.validate_on_submit():
         title = 'Create Event'
         data = CreateEvent()
-        new_event = Event( data.event_date.data,
-            data.title.data, data.body.data, data.event_date.data, administrator.id
+        new_event = Event( 
+            event_date = data.event_date.data,
+            title = data.title.data, 
+            body = data.body.data, 
+            admins = administrator.id
         )
         new_event.save_event(new_event)
         return redirect(url_for('admin.dashboard'))
